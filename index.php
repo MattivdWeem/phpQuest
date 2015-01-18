@@ -1,5 +1,9 @@
 <?php
 
+$env = new Dotenv();
+
+$env->load('.env');
+
 class SuperSecretClass{
 
 	public function __construct(){
@@ -7,9 +11,27 @@ class SuperSecretClass{
 
 	}
 
-	public function muted($call,$func){
+	public function muted($vars,$func){
+		if(is_array($vars)):
+			foreach($vars as $key => $var):
+				$$key = $var;
+				$func($$key);
+			endforeach;
+		endif;
 
-		$func($call);
+
+	}
+
+	public function shifted($url, $data = [], $config = [] , $function = false){
+
+		$function($url,$data,$config);
+
+	}
+
+	public function asManyAsSecret(){
+
+		print_r(func_get_args());
+
 
 	}
 
@@ -17,7 +39,17 @@ class SuperSecretClass{
 
 
 $obj = new SuperSecretClass();
-$obj->muted('This is my variable',function($call){
+$obj->muted(['$var' => 'This is my variable','var' => 'this is my second vrrr'],function($call){
 	echo $call;
 });
+
+echo "\n";
+
+$obj->shifted('http://test.nl',['username' => 'matti'], [], function($url,$data,$config){
+	print_r(func_get_args());
+});
+
+echo "\n";
+
+$obj->asManyAsSecret(1,2,4,5,5,6,456,45,64,56);
 

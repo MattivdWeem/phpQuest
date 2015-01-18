@@ -1,0 +1,5 @@
+{
+	"require": {
+		"mattivdweem/phpdotenv": "1.1.3.*@dev"
+	}
+}

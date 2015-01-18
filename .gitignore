@@ -1,0 +1,8 @@
+.DS_store
+.env
+composer.lock
+composer.phar
+vendor
+.SecretMonkeyBusiness
+local_tests
+index.php
