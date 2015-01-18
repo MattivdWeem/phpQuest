@@ -1,2 +1,2 @@
-# test-repo
-My super secret not private test repo with some super secret php stuff to be super secret
+# PHP (re)Quest
+Library to send requests in php (basicly a simple wrapper for cURL)
