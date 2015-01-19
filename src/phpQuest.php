@@ -9,33 +9,16 @@
 
 class phpQuest{
 
-	// in case some one is using an weird api that only has one url
-	private static $url;
-
-	// in case some one wants to send the same headers every request
-	private static $settings;
-
-	// in case some one wants to send the same data every request
-	private static $data;
-
-	private static $timeout = 10;
-
-
 	/*
 	 * Set basic settings (these might be overwritten at any time)
 	 *
 	 *
 	 */
 	public function __construct($url = false, $settings = false, $data = false){
-
 		// run start up check first
 		if(!$this->isInstalled()):
 			throw new Exception('cUrl is not installed.');
 		endif;
-
-
-
-
 	}
 
 	private function isInstalled(){
@@ -51,8 +34,6 @@ class phpQuest{
 	 *
 	 */
 	public function request($url, $settings = false, $data = false, $requestType = 'GET'){
-
-
 
 		$curl = curl_init();
 
@@ -103,14 +84,33 @@ class phpQuest{
 	}
 
 
+	public function post($url, $data, $settings = false, $function = false){
+		$res = $this->request($url, $settings, $data, 'POST');
+		if($function):
+			$function($res);
+		endif;
+	}
 
-	public function post(){}
+	public function get($url, $settings = false, $function = false){
+		$res = $this->request($url, $settings, false, 'GET');
+		if($function):
+			$function($res);
+		endif;
+	}
 
-	public function get(){}
+	public function put($url, $data, $settings = false, $function = false){
+		$res = $this->request($url, $settings, $data, 'PUT');
+		if($function):
+			$function($res);
+		endif;
+	}
 
-	public function put(){}
-
-	public function delete(){}
+	public function delete($url, $settings = false, $function = false){
+		$res = $this->request($url, $settings, false, 'DELETE');
+		if($function):
+			$function($res);
+		endif;
+	}
 
 	/*
 	 * Transforms array of headers into some thing usefull
@@ -125,8 +125,5 @@ class phpQuest{
 		endforeach;
 		return $return;
 	}
-
-
-
 
 }
