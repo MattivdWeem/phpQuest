@@ -53,14 +53,10 @@ class phpQuest{
 	public function request($url, $settings = false, $data = false, $requestType = 'GET'){
 
 
-		//print_r($settings);
 
 		$curl = curl_init();
 
 		curl_setopt($curl, CURLOPT_URL, $url);
-
-
-		//curl_setopt($curl, CURLOPT_REFERER, "http://www.example.org/yay.htm");
 
 		if(isset($settings['user_agent'])):
 			curl_setopt($curl, CURLOPT_USERAGENT, $settings['user_agent']);
@@ -72,14 +68,15 @@ class phpQuest{
 		else:
 			curl_setopt($curl, CURLOPT_HEADER, false);
 		endif;
+
 		if(isset($settings['headers'])):
 
 			curl_setopt($curl, CURLOPT_HTTPHEADER, $this->createHeaders($settings['headers']));
-			//curl_setopt($curl, CURLINFO_HEADER_OUT, true);
+			curl_setopt($curl, CURLINFO_HEADER_OUT, true);
 		endif;
 
 		if($requestType === 'PUT' || $requestType === 'POST'):
-			curl_setopt($curl, CURLOPT_POST, $data);
+			curl_setopt($curl, CURLOPT_POST, true);
 			if($data):
 				curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
 			endif;
